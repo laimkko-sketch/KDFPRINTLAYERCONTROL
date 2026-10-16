@@ -93,7 +93,12 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 .ov-gh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:4px}
 .ov-gh b{font-size:13.5px;color:var(--fg)}
 .ov-gh .mis{color:var(--bad)}
-.ov-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.ov-cards{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:4px}
+.ov-cards .mini{flex:var(--w) 1 0;min-width:calc(var(--w) * 2.4px + 18px);overflow:hidden;display:flex;flex-direction:column}
+.ov-cards .mini.rsmini{margin-left:14px}
+.ov-cards .mini-h{display:grid;min-width:0;gap:0}
+.ov-cards .mini-h b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ov-cards .mini-h > span{white-space:nowrap}
 .ov-group.rs .ov-gh b{color:var(--rsv)}
 .ov-group.rs .mini{border-color:color-mix(in srgb,var(--rsv) 50%,var(--line))}
 .ov-group.rs .ov-cards{grid-template-columns:minmax(0,320px)}
@@ -107,8 +112,9 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 .mini-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px}
 .mini-h b{font-family:var(--f-mono);font-size:13px}
 .mini-h span{font-size:11px;color:var(--muted);font-family:var(--f-mono)}
-.mini-grid{display:grid;gap:3px}
-.mini-row{display:grid;gap:1px;padding-bottom:2px;border-bottom:2px solid color-mix(in srgb,var(--beam) 70%,transparent)}
+.mini-grid{display:flex;flex-direction:column;height:92px;min-width:0}
+.mini-row{flex:1 1 0;min-height:0;display:grid;gap:1px;align-items:stretch;padding:2px 0;border-bottom:2px solid color-mix(in srgb,var(--beam) 70%,transparent)}
+.mini-row i{aspect-ratio:auto!important;border-radius:40%!important;min-width:0}
 .mini-grid i{aspect-ratio:1;border-radius:50%;background:var(--empty);display:block}
 .mini-grid i.d{background:var(--dev)} .mini-grid i.p{background:var(--prod)}
 .mini-grid i.x{background:repeating-linear-gradient(45deg,var(--obs) 0 2px,transparent 2px 3px)}
@@ -155,7 +161,7 @@ fieldset.inline-set legend{font-size:12px;color:var(--muted);padding:0 4px}
 .lg.dev{background:var(--dev)} .lg.prod{background:var(--prod)} .lg.out{background:transparent;border-color:var(--prod)}
 .lg.empty{background:transparent;border:2px dashed var(--line)}
 .scroll{overflow-x:auto;padding-bottom:4px}
-.rack{display:grid;gap:0;background:var(--surface2);padding:10px 12px 4px;border-radius:8px;border-left:6px solid var(--prod);border-right:6px solid var(--prod)}
+.rack{display:grid;gap:0;width:max-content;max-width:100%;background:var(--surface2);padding:10px 12px 4px;border-radius:8px;border-left:6px solid var(--prod);border-right:6px solid var(--prod)}
 .shelf{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:end;padding:8px 0 0}
 .shelf-lab{font-family:var(--f-mono);font-size:12px;font-weight:600;display:grid;gap:1px;padding-bottom:10px}
 .shelf-lab small{font-weight:400;font-size:10.5px;color:var(--muted)}
@@ -277,7 +283,8 @@ tr.mrow td:first-child,tr.mrow .kind{color:var(--master);font-weight:600}
   .period .seg button{white-space:nowrap;flex:none}
   .period input[type=date]{flex:1 1 0}
   #dSum{flex-basis:100%;font-size:12px}
-  .overview{padding:10px} .ov-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .overview{padding:10px} .ov-cards{gap:6px}
+  .mini-grid{height:76px}
   .mini{padding:5px} .mini-h b{font-size:12px} .mini-h span{font-size:10px}
   .rack-wrap{padding:10px}
   .rack{padding:8px 6px 2px;border-left-width:4px;border-right-width:4px}
@@ -713,9 +720,9 @@ function renderOverview(){
         const x=idx.get(L);if(!x){cells+='<i></i>';continue}
         x.type==='dev'?d++:p++;const m=!f||match(x);if(f&&m){hits++;rh++}
         cells+=`<i class="${x.out?'o':isObs(x)?'x':x.type==='dev'?'d':'p'}${m?'':' dim'}"></i>`}
-      rows+=`<div class="mini-row" style="grid-template-columns:repeat(${mx},1fr)">${cells}</div>`});
+      rows+=`<div class="mini-row" style="grid-template-columns:repeat(${mx},minmax(0,1fr))">${cells}</div>`});
     const cap=capOf(r),used=isRS?rv:d+p;
-    return `<button class="mini${isRS?' rsmini':''}${f&&rh?' hit':''}" data-r="${r}" aria-current="${S.rack===r}" title="${esc(rackName(r))} · ${lvls.length}단 · ${cap}자리${isRS?` · ${fmt(tm)} m`:''}">
+    return `<button style="--w:${mx}" class="mini${isRS?' rsmini':''}${f&&rh?' hit':''}" data-r="${r}" aria-current="${S.rack===r}" title="${esc(rackName(r))} · ${lvls.length}단 · ${cap}자리${isRS?` · ${fmt(tm)} m`:''}">
       <div class="mini-h"><b>${esc(rackName(r)).replace(/ \((.*)\)$/,'<small> ($1)</small>')}</b><span>${f?`<b style="color:var(--accent)">${rh}</b>/`:''}${used}/${cap}</span></div>
       <div class="mini-grid">${rows}</div>
       <div class="bar">${isRS?`<i style="width:${rv/cap*100}%;background:var(--rsv)"></i>`:`<i style="width:${d/cap*100}%;background:var(--dev)"></i><i style="width:${p/cap*100}%;background:var(--prod)"></i>`}</div>
@@ -730,10 +737,11 @@ function renderRack(){
   const lvls=levelsOf(r);if(!lvls.length&&RACKS.length){S.rack=RACKS[0];return renderRack()}
   $('rackTitle').innerHTML=isRS?`<span style="color:var(--rsv)">${RS} (잔량재고)</span> · 지관 단면`:`${esc(rackName(r))} · 지관 단면`;
   $('rack').classList.toggle('rsrack',isRS);
-  const W=($('rack').clientWidth||820)-80,def=rackDef(r)||{};
+  const W=Math.max(300,($('rack').clientWidth||820)-(isMobile()?60:90)),def=rackDef(r)||{};
+  const maxN=Math.max(...[...RACKS,RS].flatMap(levelsOf),1),half=Math.max(isMobile()?8:10,Math.min(26,Math.floor(W/(maxN+1))));
   let h='';
-  lvls.forEach((n,i)=>{const lv=i+1,tw=W/(n+1)*2,note=def.notes&&def.notes[i];
-    h+=`<div class="shelf"><div class="shelf-lab">${lvName(lv)}단<small>${n}칸</small>${note?`<small>${esc(note)}</small>`:''}</div><div class="shelf-scroll"><div class="shelf-grid${tw<24?' tiny':tw<36?' small':''}" style="grid-template-columns:repeat(${n+1},minmax(0,1fr));min-width:${(n+1)*9}px">`;
+  lvls.forEach((n,i)=>{const lv=i+1,tw=half*2,note=def.notes&&def.notes[i];
+    h+=`<div class="shelf"><div class="shelf-lab">${lvName(lv)}단<small>${n}칸</small>${note?`<small>${esc(note)}</small>`:''}</div><div class="shelf-scroll"><div class="shelf-grid${tw<24?' tiny':tw<36?' small':''}" style="grid-template-columns:repeat(${n+1},${half}px);width:${(n+1)*half}px">`;
     for(let s=1;s<=n;s++){
       const L=`${r}-${lvName(lv)}-${pad(s)}`,x=idx.get(L),y=ridx.get(L),z=isRS,gp=`style="grid-column:${s} / span 2;grid-row:${s%2?2:1}"`;
       if(y){const m=!f||match(y);
@@ -1351,6 +1359,7 @@ $('filtBtn').onclick=()=>{const o=$('filters').classList.toggle('open');$('filtB
 $('tabbar').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.v==='__rcv'){openRcv({});return}
   S.view=b.dataset.v;syncSeg();render();window.scrollTo({top:0})};
 if(MQ.addEventListener)MQ.addEventListener('change',()=>render());
+let rzT;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(S.view==='map')renderRack()},200)});
 let tt;function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
 
 $('overview').onclick=e=>{const b=e.target.closest('.mini');if(!b)return;S.rack=b.dataset.r;render()};
