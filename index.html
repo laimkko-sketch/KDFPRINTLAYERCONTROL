@@ -18,7 +18,7 @@
   --accent:#27347f;
   --dev:#e0891f; --on-dev:#2b1600;
   --prod:#2f52c4; --on-prod:#ffffff;
-  --kraft:#b88a58; --empty:#e3e5eb;
+  --kraft:#b88a58; --beam:#d9542f; --empty:#e3e5eb;
   --master:#8a3fb8;
   --obs:#5d6272;            /* 폐패턴 검토 */
   --rsv:#16827a;            /* 잔량재고 */
@@ -28,11 +28,11 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#12141c; --surface:#1a1d28; --surface2:#222634; --line:#323748; --fg:#e7e9f1; --muted:#9aa1b8;
-  --accent:#9fb0ff; --dev:#f0a043; --on-dev:#2b1600; --prod:#5d82f0; --on-prod:#ffffff; --kraft:#a27a50; --empty:#2a2e3c; --master:#c99af0; --obs:#8c93a8; --rsv:#3cc0b3;
+  --accent:#9fb0ff; --dev:#f0a043; --on-dev:#2b1600; --prod:#5d82f0; --on-prod:#ffffff; --kraft:#a27a50; --empty:#2a2e3c; --beam:#b9512f; --master:#c99af0; --obs:#8c93a8; --rsv:#3cc0b3;
   --ok:#55c088; --warn:#e4b04a; --bad:#ec6d62; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12141c; --surface:#1a1d28; --surface2:#222634; --line:#323748; --fg:#e7e9f1; --muted:#9aa1b8;
-  --accent:#9fb0ff; --dev:#f0a043; --on-dev:#2b1600; --prod:#5d82f0; --on-prod:#ffffff; --kraft:#a27a50; --empty:#2a2e3c; --master:#c99af0; --obs:#8c93a8; --rsv:#3cc0b3;
+  --accent:#9fb0ff; --dev:#f0a043; --on-dev:#2b1600; --prod:#5d82f0; --on-prod:#ffffff; --kraft:#a27a50; --empty:#2a2e3c; --beam:#b9512f; --master:#c99af0; --obs:#8c93a8; --rsv:#3cc0b3;
   --ok:#55c088; --warn:#e4b04a; --bad:#ec6d62; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.5}
@@ -93,7 +93,7 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 .ov-gh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:4px}
 .ov-gh b{font-size:13.5px;color:var(--fg)}
 .ov-gh .mis{color:var(--bad)}
-.ov-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.ov-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .ov-group.rs .ov-gh b{color:var(--rsv)}
 .ov-group.rs .mini{border-color:color-mix(in srgb,var(--rsv) 50%,var(--line))}
 .ov-group.rs .ov-cards{grid-template-columns:minmax(0,320px)}
@@ -107,7 +107,8 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 .mini-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px}
 .mini-h b{font-family:var(--f-mono);font-size:13px}
 .mini-h span{font-size:11px;color:var(--muted);font-family:var(--f-mono)}
-.mini-grid{display:grid;gap:2px}
+.mini-grid{display:grid;gap:3px}
+.mini-row{display:grid;gap:1px;padding-bottom:2px;border-bottom:2px solid color-mix(in srgb,var(--beam) 70%,transparent)}
 .mini-grid i{aspect-ratio:1;border-radius:50%;background:var(--empty);display:block}
 .mini-grid i.d{background:var(--dev)} .mini-grid i.p{background:var(--prod)}
 .mini-grid i.x{background:repeating-linear-gradient(45deg,var(--obs) 0 2px,transparent 2px 3px)}
@@ -122,7 +123,10 @@ input:focus-visible,select:focus-visible,button:focus-visible,textarea:focus-vis
 .mini-grid i.z{background:transparent;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--rsv) 55%,transparent)}
 .tube.rsv{background:var(--rsv);color:#fff;border-color:color-mix(in srgb,var(--rsv) 55%,var(--kraft));border-radius:10px}
 .tube.zone{border:2px dashed color-mix(in srgb,var(--rsv) 60%,transparent);background:color-mix(in srgb,var(--rsv) 7%,transparent);border-radius:10px}
-.rack .lab.zl{color:var(--rsv);font-weight:600}
+.rk-row{display:grid;grid-template-columns:44px 80px minmax(110px,160px) minmax(140px,1fr) 64px 56px;gap:6px 8px;align-items:center;font-size:12.5px}
+.rk-row input,.rk-row select{padding:5px 7px;font-size:12.5px;min-width:0}
+.rk-row .sum{font-family:var(--f-mono);color:var(--muted);text-align:right}
+.rk-head{color:var(--muted);font-size:11.5px}
 .lg.rsv{background:var(--rsv);border-color:var(--rsv);border-radius:4px}
 .lg.zone{border:2px dashed var(--rsv);background:transparent;border-radius:4px}
 .kpi.rsv b{color:var(--rsv)}
@@ -151,9 +155,19 @@ fieldset.inline-set legend{font-size:12px;color:var(--muted);padding:0 4px}
 .lg.dev{background:var(--dev)} .lg.prod{background:var(--prod)} .lg.out{background:transparent;border-color:var(--prod)}
 .lg.empty{background:transparent;border:2px dashed var(--line)}
 .scroll{overflow-x:auto;padding-bottom:4px}
-.rack{display:grid;grid-template-columns:40px repeat(var(--slots),48px);gap:6px 5px;width:max-content;background:var(--surface2);padding:12px;border-radius:8px}
-.rack .lab{font-family:var(--f-mono);font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:center}
-.shelf-line{grid-column:1/-1;height:3px;background:var(--line);border-radius:2px}
+.rack{display:grid;gap:0;background:var(--surface2);padding:10px 12px 4px;border-radius:8px;border-left:6px solid var(--prod);border-right:6px solid var(--prod)}
+.shelf{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:end;padding:8px 0 0}
+.shelf-lab{font-family:var(--f-mono);font-size:12px;font-weight:600;display:grid;gap:1px;padding-bottom:10px}
+.shelf-lab small{font-weight:400;font-size:10.5px;color:var(--muted)}
+.shelf-scroll{overflow-x:auto;min-width:0}
+.shelf-grid{display:grid;grid-template-rows:auto auto;padding-bottom:3px;border-bottom:7px solid var(--beam);border-radius:0 0 2px 2px}
+.shelf-grid .tube{width:calc(100% - 2px);height:auto;aspect-ratio:1;justify-self:center}
+.shelf-grid .tube.up{margin-bottom:-14%;z-index:1}
+.shelf-grid .tube.sel,.shelf-grid .tube.hit{z-index:2}
+.shelf-grid.tiny .tube .f,.shelf-grid.tiny .tube .c{display:none}
+.shelf-grid.small .tube .f{display:none}
+.shelf-grid.small .tube .c{font-size:9px}
+.rack.rsrack{border-color:var(--rsv)}
 .tube{width:48px;height:48px;border-radius:50%;border:4px solid var(--kraft);padding:0;cursor:pointer;position:relative;background:var(--empty);display:grid;place-content:center;line-height:1.05;font-family:var(--f-mono);transition:transform .12s;box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)}
 .tube .f{font-size:8.5px;opacity:.85;letter-spacing:.04em}
 .tube .c{font-size:11.5px;font-weight:600}
@@ -263,15 +277,17 @@ tr.mrow td:first-child,tr.mrow .kind{color:var(--master);font-weight:600}
   .period .seg button{white-space:nowrap;flex:none}
   .period input[type=date]{flex:1 1 0}
   #dSum{flex-basis:100%;font-size:12px}
-  .overview{padding:10px} .ov-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .overview{padding:10px} .ov-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
   .mini{padding:5px} .mini-h b{font-size:12px} .mini-h span{font-size:10px}
   .rack-wrap{padding:10px}
-  .scroll{overflow:visible}
-  .rack{width:100%;grid-template-columns:26px repeat(var(--slots),minmax(0,1fr));gap:5px 3px;padding:8px 6px}
-  .rack .lab{font-size:9px}
-  .tube{width:100%;height:auto;aspect-ratio:1;border-width:3px;line-height:1}
-  .tube .f{display:none} .tube .c{font-size:clamp(7.5px,2.5vw,11px)}
-  .tube.empty{border-width:1.5px}
+  .rack{padding:8px 6px 2px;border-left-width:4px;border-right-width:4px}
+  .shelf{grid-template-columns:34px minmax(0,1fr);gap:4px}
+  .shelf-lab{font-size:10.5px}
+  .shelf-grid .tube{border-width:2px}
+  .shelf-grid .tube.empty{border-width:1.5px}
+  .rk-row{grid-template-columns:40px minmax(0,1fr) minmax(0,1fr)}
+  .rk-row.rk-head{display:none}
+  .rk-row .lv{grid-column:2 / 4}
   .legend{font-size:11.5px;gap:4px 12px}
   .panel-h{padding:10px 12px}
   /* 목록 표 → 카드 */
@@ -434,10 +450,11 @@ tr.mrow td:first-child,tr.mrow .kind{color:var(--master);font-weight:600}
   </div>
 
   <section class="panel">
-    <div class="panel-h"><h2>랙 배정 · 인쇄지 업체별</h2><span class="hint">랙마다 보관할 업체를 정합니다. 신규 마스터는 그 업체 랙의 빈자리를 먼저 추천합니다</span></div>
-    <div style="padding:12px 14px;display:grid;gap:10px">
-      <div class="rack-assign" id="rackAssign"></div>
-      <div class="actions"><button class="btn sm" id="rackAssignReset">기본 배정으로 되돌리기</button><span class="hint" id="rackAssignSum"></span></div>
+    <div class="panel-h"><h2>랙 구성 · 크기와 업체 배정</h2><span class="hint">단별 지관 수는 위 단(A)부터 쉼표로 적습니다. 신규 마스터는 배정 업체 랙의 빈자리를 먼저 추천합니다</span></div>
+    <div style="padding:12px 14px;display:grid;gap:8px">
+      <div class="rk-row rk-head"><span>랙</span><span>표지</span><span>배정 업체</span><span>단별 지관 수 (A, B, C…)</span><span class="sum">합계</span><span></span></div>
+      <div id="rackAssign" style="display:grid;gap:6px"></div>
+      <div class="actions"><button class="btn sm" id="rackAdd">+ 랙 추가</button><button class="btn sm" id="rackAssignReset">사진 기준 구성으로 되돌리기</button><span class="hint" id="rackAssignSum"></span></div>
     </div>
   </section>
 
@@ -483,15 +500,24 @@ tr.mrow td:first-child,tr.mrow .kind{color:var(--master);font-weight:600}
 <script>
 const pad=(n,l=2)=>String(n).padStart(l,'0');
 const FAMS={KW:{en:'KDF WOOD',ko:'우드'},KS:{en:'KDF STONE',ko:'스톤'},KG:{en:'KDF GRANITE',ko:'그라니트'}};
-const RACK_N=24,LEVELS=6,SLOTS=10;
-const RACKS=Array.from({length:RACK_N},(_,i)=>'R'+pad(i+1));
+/* 랙 구성: 현장 사진 기준(ㄷ자 랙 왼쪽 면, 앞에서부터 R01~R05).
+   단은 위에서부터 A, B, C… / 지관은 왼쪽부터 번호(2단 쌓기: 홀수=아랫줄, 짝수=윗줄) */
+const LV_CH='ABCDEFGHIJKLMNOP';
+const lvName=n=>LV_CH[n-1]||String(n);
+const DEFAULT_RACKS=[
+  {id:'R01',tag:'',sup:'KTE',levels:[45,45,44,45]},
+  {id:'R02',tag:'',sup:'KTE',levels:[40,41,39,38,38]},
+  {id:'R03',tag:'',sup:'형제',levels:[23,21,21,21]},
+  {id:'R04',tag:'M.T',sup:'공용',levels:[40,40,38,36],notes:['6"×36"','6"×48"','7"×48"','']},
+  {id:'R05',tag:'U.B',sup:'공용',levels:[21,21,20,20],notes:['6"×36"','6"×48"','7"×48"','']}
+];
+let RACKS=DEFAULT_RACKS.map(x=>x.id);
 const SUP_BASE=['KTE','형제','배광','프린테크','태창(대만)','데코마(대만)','윤지아(중국)','포코너스(중국)'];
 const SUP_NOTE={};
 const supLabel=v=>SUP_NOTE[v]?`${v} (${SUP_NOTE[v]})`:v;
 const SHARED='공용';
 /* 기본 랙 배정: 생산량이 가장 많은 KTE(별도 법인)에 가장 많은 랙 */
-const RACK_PLAN=[['KTE',8],['형제',3],['배광',3],['프린테크',2],['태창(대만)',2],['데코마(대만)',2],['윤지아(중국)',1],['포코너스(중국)',1],['공용',2]];
-function defaultRackSup(){const m={};let i=0;RACK_PLAN.forEach(([v,n])=>{for(let k=0;k<n&&i<RACKS.length;k++)m[RACKS[i++]]=v});while(i<RACKS.length)m[RACKS[i++]]=SHARED;return m}
+const cloneRacks=()=>JSON.parse(JSON.stringify(DEFAULT_RACKS));
 const SUPKEY='kdf-printpaper-suppliers';
 let SUP=SUP_BASE.slice();
 try{const x=JSON.parse(localStorage.getItem(SUPKEY)||'[]');x.forEach(v=>{if(!SUP.includes(v))SUP.push(v)})}catch(e){}
@@ -501,21 +527,26 @@ const SPLIT_DEF={total:30,self:3,boryeong:3,vendor:3};
 /* 잔량재고는 전용 잔량 RACK(RS) 한 곳에 모아 보관 */
 const RS='RS';
 const rsDims=()=>[SET.rsvLv||8,SET.rsvSl||15];
+const rackDef=r=>r===RS?{id:RS,tag:'잔량',levels:Array(rsDims()[0]).fill(rsDims()[1])}:(SET.racks||[]).find(x=>x.id===r);
+const levelsOf=r=>(rackDef(r)||{levels:[]}).levels;
+const capOf=r=>levelsOf(r).reduce((a,b)=>a+b,0);
+function rackLocs(r){const o=[];levelsOf(r).forEach((n,i)=>{for(let k=1;k<=n;k++)o.push(`${r}-${lvName(i+1)}-${pad(k)}`)});return o}
+function syncRacks(){RACKS=(SET.racks||[]).map(x=>x.id)}
 const inZoneS=()=>false;
 const inZoneL=L=>L.startsWith(RS+'-');
-function rsLocs(){const [lv,sl]=rsDims(),o=[];for(let a=1;a<=lv;a++)for(let b=1;b<=sl;b++)o.push(`${RS}-${pad(a)}-${pad(b)}`);return o}
-const rackSup=r=>(SET.rackSup&&SET.rackSup[r])||SHARED;
+function rsLocs(){return rackLocs(RS)}
+const rackSup=r=>{const d=rackDef(r);return(d&&d.sup)||SHARED};
 const racksOf=v=>RACKS.filter(r=>rackSup(r)===v);
 const supShort=v=>v===SHARED?'공용':String(v).replace(/\s*\(.*\)\s*$/,'');
-const rackName=r=>r===RS?`${RS} (잔량)`:`${r} (${supShort(rackSup(r))})`;
+const rackName=r=>{if(r===RS)return `${RS} (잔량)`;const d=rackDef(r);return `${r}${d&&d.tag?' '+d.tag:''} (${supShort(rackSup(r))})`};
 const misRack=p=>{const rs=rackSup(p.loc.r);return rs!==SHARED&&rs!==p.sup};
 const fmt=n=>n==null||n===''?'—':Number(n).toLocaleString();
 const J={pass:['합격','ok'],fail:['불합격','bad'],etc:['기타','warn']};
 const ETC_TYPES=['로트구분','특채(조건부 사용)','재검 대기','기타'];
-const KEY='kdf-printpaper-v7',SKEY='kdf-printpaper-settings-v2';
+const KEY='kdf-printpaper-v8',SKEY='kdf-printpaper-settings-v3';
 const KEEP_LOTS=4;
-const locStr=l=>`${l.r}-${pad(l.lv)}-${pad(l.s)}`;
-const parseLoc=s=>{const [r,lv,sl]=s.split('-');return{r,lv:+lv,s:+sl}};
+const locStr=l=>`${l.r}-${lvName(l.lv)}-${pad(l.s)}`;
+const parseLoc=s=>{const [r,lv,sl]=s.split('-');const n=/^\d+$/.test(lv)?+lv:LV_CH.indexOf(String(lv).toUpperCase())+1;return{r,lv:n,s:+sl}};
 const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const today=()=>ymd(new Date()); // 현지(한국) 날짜 기준
 const WD=['일','월','화','수','목','금','토'];
@@ -526,9 +557,9 @@ const codeNum=c=>+c.slice(3);
    허용 범위 R = 마스터↔기준 로트 ΔE (최소 범위 이하면 최소 범위 적용).
    새 로트의 마스터 대비 ΔE ≤ R 이고 기준 로트 대비 ΔE ≤ R 이면 두 원이 겹치는 렌즈 영역 안 → 합격.
    R 초과 ~ R+경계 폭 이내 → 기타(로트구분), 그 이상 → 불합격. 첫 로트는 마스터 대비 '첫 로트 허용 ΔE'로 판정. */
-let SET={limit:1.0,minWin:0.3,border:0.2,obsMonths:24,rsvLv:8,rsvSl:15,rackSup:null};
+let SET={limit:1.0,minWin:0.3,border:0.2,obsMonths:24,rsvLv:8,rsvSl:15,racks:null};
 try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(s&&s.minWin!=null)SET=s}catch(e){}
-if(!SET.rackSup)SET.rackSup=defaultRackSup();if(!SET.rsvLv)SET.rsvLv=8;if(!SET.rsvSl)SET.rsvSl=15;
+if(!SET.racks||!SET.racks.length)SET.racks=cloneRacks();delete SET.rackSup;syncRacks();if(!SET.rsvLv)SET.rsvLv=8;if(!SET.rsvSl)SET.rsvSl=15;
 const refLot=lots=>{for(let i=lots.length-1;i>=0;i--)if(lots[i].j!=='fail'&&lots[i].deM!=null)return lots[i];return null};
 const rangeFor=ref=>ref?Math.max(ref.deM,SET.minWin):SET.limit;
 function judgeCalc(deM,deP,ref){
@@ -548,7 +579,7 @@ function seedData(){
   const dateBetween=(a,b)=>new Date(a+R()*(b-a)).toISOString().slice(0,10);
   const T0=Date.parse('2023-01-05'),T1=Date.parse('2026-10-10');
   const seq={KW:0,KS:0,KG:0},list=[];
-  for(const r of RACKS)for(let lv=1;lv<=LEVELS;lv++)for(let s=1;s<=SLOTS;s++){
+  for(const r of RACKS)for(const L0 of rackLocs(r)){const {lv,s}=parseLoc(L0);
     if(R()<0.17)continue;
     const fr=R(),fam=fr<.6?'KW':fr<.85?'KS':'KG';
     seq[fam]+=1+(R()<.06?1:0); // 일부 결번
@@ -656,7 +687,7 @@ function rsvIndex(){const m=new Map();DB.forEach(p=>{if(hasRsv(p))m.set(locStr(p
 const occupied=()=>{const a=indexByLoc(),b=rsvIndex();return L=>a.has(L)||b.has(L)};
 
 function renderKpis(){
-  const dev=DB.filter(p=>p.type==='dev').length,prod=DB.length-dev,out=DB.filter(p=>p.out).length,cap=RACK_N*LEVELS*SLOTS;
+  const dev=DB.filter(p=>p.type==='dev').length,prod=DB.length-dev,out=DB.filter(p=>p.out).length,cap=RACKS.reduce((a,r)=>a+capOf(r),0);
   const lots=DB.reduce((a,p)=>a+kept(p).length,0);
   const etc=DB.filter(p=>{const l=lastLot(p);return l&&l.j==='etc'}).length;
   $('kpis').innerHTML=`
@@ -675,55 +706,47 @@ function renderKpis(){
 function renderOverview(){
   const idx=indexByLoc(),ridx=rsvIndex(),f=filtering();let hits=0;
   const card=r=>{
-    let cells='',d=0,p=0,rh=0,mis=0;
-    for(let lv=LEVELS;lv>=1;lv--)for(let s=1;s<=SLOTS;s++){
-      const x=idx.get(`${r}-${pad(lv)}-${pad(s)}`);
-      if(!x){cells+='<i></i>';continue}
-      x.type==='dev'?d++:p++;if(misRack(x))mis++;
-      const m=!f||match(x);if(f&&m){hits++;rh++}
-      cells+=`<i class="${x.out?'o':isObs(x)?'x':x.type==='dev'?'d':'p'}${m?'':' dim'}"></i>`;
-    }
-    const cap=LEVELS*SLOTS;
-    return {d,p,mis,html:`<button class="mini${f&&rh?' hit':''}" data-r="${r}" aria-current="${S.rack===r}">
-      <div class="mini-h"><b>${r}<small> (${esc(supShort(rackSup(r)))})</small></b><span>${f?`<b style="color:var(--accent)">${rh}</b>/`:''}${d+p}/${cap}</span></div>
-      <div class="mini-grid" style="grid-template-columns:repeat(${SLOTS},1fr)">${cells}</div>
-      <div class="bar"><i style="width:${d/cap*100}%;background:var(--dev)"></i><i style="width:${p/cap*100}%;background:var(--prod)"></i></div>
-    </button>`}};
-  let h=`<div class="ov-cards">${RACKS.map(r=>card(r).html).join('')}`;
-  // 잔량 RACK
-  const [lv,sl]=rsDims();let cells='',n=0,tm=0,rh=0;
-  for(let a=lv;a>=1;a--)for(let b=1;b<=sl;b++){const y=ridx.get(`${RS}-${pad(a)}-${pad(b)}`);
-    if(!y){cells+='<i class="z"></i>';continue}n++;tm+=y.reserve.m;const m=!f||match(y);if(f&&m)rh++;cells+=`<i class="r${m?'':' dim'}"></i>`}
-  h+=`<button class="mini rsmini${f&&rh?' hit':''}" data-r="${RS}" aria-current="${S.rack===RS}" title="잔량재고 RACK · ${fmt(tm)} m">
-      <div class="mini-h"><b>${RS}<small> (잔량)</small></b><span>${f?`<b style="color:var(--accent)">${rh}</b>/`:''}${n}/${lv*sl}</span></div>
-      <div class="mini-grid" style="grid-template-columns:repeat(${sl},1fr)">${cells}</div>
-      <div class="bar"><i style="width:${n/(lv*sl)*100}%;background:var(--rsv)"></i></div></button></div>`;
-  $('overview').innerHTML=h;
-  $('ovHint').textContent=f?`조건 일치 ${hits}건`:`${RACK_N}개 랙 · 랙당 ${LEVELS}단 × ${SLOTS}열 + 잔량 RACK ${lv}단 × ${sl}열 · 괄호는 배정 업체`;
+    const isRS=r===RS,lvls=levelsOf(r),mx=Math.max(1,...lvls);let rows='',d=0,p=0,rv=0,rh=0,tm=0;
+    lvls.forEach((n,i)=>{let cells='';
+      for(let k=1;k<=n;k++){const L=`${r}-${lvName(i+1)}-${pad(k)}`;
+        if(isRS){const y=ridx.get(L);if(!y){cells+='<i class="z"></i>';continue}rv++;tm+=y.reserve.m;const m=!f||match(y);if(f&&m)rh++;cells+=`<i class="r${m?'':' dim'}"></i>`;continue}
+        const x=idx.get(L);if(!x){cells+='<i></i>';continue}
+        x.type==='dev'?d++:p++;const m=!f||match(x);if(f&&m){hits++;rh++}
+        cells+=`<i class="${x.out?'o':isObs(x)?'x':x.type==='dev'?'d':'p'}${m?'':' dim'}"></i>`}
+      rows+=`<div class="mini-row" style="grid-template-columns:repeat(${mx},1fr)">${cells}</div>`});
+    const cap=capOf(r),used=isRS?rv:d+p;
+    return `<button class="mini${isRS?' rsmini':''}${f&&rh?' hit':''}" data-r="${r}" aria-current="${S.rack===r}" title="${esc(rackName(r))} · ${lvls.length}단 · ${cap}자리${isRS?` · ${fmt(tm)} m`:''}">
+      <div class="mini-h"><b>${esc(rackName(r)).replace(/ \((.*)\)$/,'<small> ($1)</small>')}</b><span>${f?`<b style="color:var(--accent)">${rh}</b>/`:''}${used}/${cap}</span></div>
+      <div class="mini-grid">${rows}</div>
+      <div class="bar">${isRS?`<i style="width:${rv/cap*100}%;background:var(--rsv)"></i>`:`<i style="width:${d/cap*100}%;background:var(--dev)"></i><i style="width:${p/cap*100}%;background:var(--prod)"></i>`}</div>
+    </button>`};
+  $('overview').innerHTML=`<div class="ov-cards">${[...RACKS,RS].map(card).join('')}</div>`;
+  const tot=RACKS.reduce((a,r)=>a+capOf(r),0);
+  $('ovHint').textContent=f?`조건 일치 ${hits}건`:`${RACKS.length}개 랙 · ${tot.toLocaleString()}자리 + 잔량 RACK ${capOf(RS)}자리 · 괄호는 배정 업체`;
 }
 
 function renderRack(){
   const idx=indexByLoc(),ridx=rsvIndex(),f=filtering(),r=S.rack,rc=S.rcv,isRS=r===RS;
-  const [LV,SL]=isRS?rsDims():[LEVELS,SLOTS];
+  const lvls=levelsOf(r);if(!lvls.length&&RACKS.length){S.rack=RACKS[0];return renderRack()}
   $('rackTitle').innerHTML=isRS?`<span style="color:var(--rsv)">${RS} (잔량재고)</span> · 지관 단면`:`${esc(rackName(r))} · 지관 단면`;
-  $('rack').style.setProperty('--slots',SL);
-  let h='<div class="lab"></div>';
-  for(let s=1;s<=SL;s++)h+=isRS?`<div class="lab zl">${pad(s)}</div>`:`<div class="lab">${pad(s)}열</div>`;
-  for(let lv=LV;lv>=1;lv--){
-    h+=`<div class="lab">${pad(lv)}단</div>`;
-    for(let s=1;s<=SL;s++){
-      const L=`${r}-${pad(lv)}-${pad(s)}`,x=idx.get(L),y=ridx.get(L),z=isRS;
+  $('rack').classList.toggle('rsrack',isRS);
+  const W=($('rack').clientWidth||820)-80,def=rackDef(r)||{};
+  let h='';
+  lvls.forEach((n,i)=>{const lv=i+1,tw=W/(n+1)*2,note=def.notes&&def.notes[i];
+    h+=`<div class="shelf"><div class="shelf-lab">${lvName(lv)}단<small>${n}칸</small>${note?`<small>${esc(note)}</small>`:''}</div><div class="shelf-scroll"><div class="shelf-grid${tw<24?' tiny':tw<36?' small':''}" style="grid-template-columns:repeat(${n+1},minmax(0,1fr));min-width:${(n+1)*9}px">`;
+    for(let s=1;s<=n;s++){
+      const L=`${r}-${lvName(lv)}-${pad(s)}`,x=idx.get(L),y=ridx.get(L),z=isRS,gp=`style="grid-column:${s} / span 2;grid-row:${s%2?2:1}"`;
       if(y){const m=!f||match(y);
-        h+=`<button class="tube rsv${f&&!m?' dim':''}${f&&m&&(S.q||dateOn())?' hit':''}${S.sel===y.code?' sel':''}" data-rsv="${y.code}" aria-label="${L} ${y.code} 잔량재고 ${y.reserve.m} m" title="${L} · ${y.code} 잔량재고 ${y.reserve.m} m"><span class="f">잔량</span><span class="c">${y.code.slice(3)}</span></button>`;continue}
+        h+=`<button ${gp} class="tube rsv${s%2?'':' up'}${f&&!m?' dim':''}${f&&m&&(S.q||dateOn())?' hit':''}${S.sel===y.code?' sel':''}" data-rsv="${y.code}" aria-label="${L} ${y.code} 잔량재고 ${y.reserve.m} m" title="${L} · ${y.code} 잔량재고 ${y.reserve.m} m"><span class="f">잔량</span><span class="c">${y.code.slice(3)}</span></button>`;continue}
       if(!x){const selE=rc&&(rc.loc===L||rc.rloc===L)||(S.rsvDraft&&S.rsvDraft.loc===L);
-        h+=`<button class="tube empty${z?' zone':''}${selE?' sel':''}" data-loc="${L}" aria-label="${L} ${z?'잔량 RACK 빈 자리':'빈 위치'}" title="${L} · ${z?'잔량 RACK 빈 자리':'빈 위치'}"></button>`;continue}
+        h+=`<button ${gp} class="tube empty${s%2?'':' up'}${z?' zone':''}${selE?' sel':''}" data-loc="${L}" aria-label="${L} ${z?'잔량 RACK 빈 자리':'빈 위치'}" title="${L} · ${z?'잔량 RACK 빈 자리':'빈 위치'}"></button>`;continue}
       const m=!f||match(x);
       const ob=isObs(x);
       const ms=misRack(x);
-      h+=`<button class="tube ${x.type}${ob?' obs':''}${x.out?' out':''}${f&&!m?' dim':''}${f&&m&&(S.q||dateOn())?' hit':''}${S.sel===x.code?' sel':''}" data-code="${x.code}" aria-label="${L} ${x.code}${ob?' 폐패턴 검토':''}" title="${L} · ${x.code} ${esc(x.name)} · ${esc(x.sup)}${ms?` · 업체 랙 불일치 (이 랙은 ${esc(rackSup(r))})`:''}${ob?` · 폐패턴 검토 (마지막 입고 ${lastRcv(x)})`:''}"><span class="f">${x.fam}</span><span class="c">${x.code.slice(3)}</span></button>`;
+      h+=`<button ${gp} class="tube ${x.type}${s%2?'':' up'}${ob?' obs':''}${x.out?' out':''}${f&&!m?' dim':''}${f&&m&&(S.q||dateOn())?' hit':''}${S.sel===x.code?' sel':''}" data-code="${x.code}" aria-label="${L} ${x.code}${ob?' 폐패턴 검토':''}" title="${L} · ${x.code} ${esc(x.name)} · ${esc(x.sup)}${ms?` · 업체 랙 불일치 (이 랙은 ${esc(rackSup(r))})`:''}${ob?` · 폐패턴 검토 (마지막 입고 ${lastRcv(x)})`:''}"><span class="f">${x.fam}</span><span class="c">${x.code.slice(3)}</span></button>`;
     }
-    if(lv>1)h+='<div class="shelf-line"></div>';
-  }
+    h+='</div></div></div>';
+  });
   $('rack').innerHTML=h;
   const busy=S.moving||S.pickLoc;
   $('rackWrap').classList.toggle('moving',!!busy);
@@ -920,7 +943,7 @@ function nextLotNo(date){
 }
 function emptyLocs(zone=false){const occ=occupied(),out=[];
   if(zone)return rsLocs().filter(L=>!occ(L));
-  for(const r of RACKS)for(let lv=1;lv<=LEVELS;lv++)for(let s=1;s<=SLOTS;s++){const L=`${r}-${pad(lv)}-${pad(s)}`;if(!occ(L))out.push(L)}
+  for(const r of RACKS)for(const L of rackLocs(r))if(!occ(L))out.push(L);
   return out}
 function zoneNear(){const e=emptyLocs(true);return e[0]||''}
 /* 업체 랙 우선 → 공용 랙 → 나머지 순서로 빈자리 */
@@ -1144,50 +1167,37 @@ function buildVizWB(){
   const wb=XLSX.utils.book_new(),idx=indexByLoc(),ridx=rsvIndex();
   const RSS={font:{bold:true,sz:9,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:XC.rsv}},alignment:{horizontal:'center',vertical:'center'},border:{top:bd(XC.rsv),bottom:bd(XC.rsv),left:bd(XC.rsv),right:bd(XC.rsv)}};
   const ZS={fill:{fgColor:{rgb:'E3F3F1'}},border:{top:{style:'dashed',color:{rgb:XC.rsv}},bottom:{style:'dashed',color:{rgb:XC.rsv}},left:{style:'dashed',color:{rgb:XC.rsv}},right:{style:'dashed',color:{rgb:XC.rsv}}}};
-  const ws={},merges=[],PER=4,BW=SLOTS+2,BH=LEVELS+3,TOP=4;
+  const ws={},merges=[],TOP=4;
+  const maxN=Math.max(1,...[...RACKS,RS].flatMap(levelsOf));
   put(ws,0,0,'인쇄지 샘플 보관 위치도',ST.title);
-  put(ws,1,0,`기준일 ${today()} · ${RACK_N}개 랙 × ${LEVELS}단 × ${SLOTS}열 · 보관 ${DB.length}건`,ST.sub);
-  const lg=[['개발샘플',tubeStyle({type:'dev'})],['양산샘플',tubeStyle({type:'prod'})],['반출중',tubeStyle({type:'prod',out:true})],['폐패턴 검토',tubeStyle({type:'prod',obs:true})],['잔량재고',null],['빈 위치',tubeStyle(null)]];
-  lg.forEach(([t,s],i)=>{if(t==='잔량재고')s=RSS;put(ws,2,i*2,t==='빈 위치'?'':t.slice(0,2),s);put(ws,2,i*2+1,t==='폐패턴 검토'?`폐패턴 검토 (${SET.obsMonths}개월 무입고)`:t,ST.sub)});
-  RACKS.forEach((r,i)=>{
-    const bx=(i%PER)*BW,by=TOP+Math.floor(i/PER)*BH;
-    let cnt=0,d=0,mi=0;
-    for(let lv=LEVELS;lv>=1;lv--){
-      const row=by+2+(LEVELS-lv);
-      put(ws,row,bx,`${pad(lv)}단`,ST.lab);
-      for(let s=1;s<=SLOTS;s++){const L=`${r}-${pad(lv)}-${pad(s)}`,p=idx.get(L),y=ridx.get(L);
-        if(p){cnt++;if(p.type==='dev')d++;if(misRack(p))mi++}
-        put(ws,row,bx+s,p?p.code:'',tubeStyle(p&&{...p,obs:isObs(p)}))}
-    }
-    put(ws,by,bx,`${rackName(r)}   보관 ${cnt}/${LEVELS*SLOTS} · 개발 ${d} · 양산 ${cnt-d}`,ST.rackT);
-    for(let c=1;c<=SLOTS;c++)put(ws,by,bx+c,'',ST.rackT);
-    merges.push({s:{r:by,c:bx},e:{r:by,c:bx+SLOTS}});
-    put(ws,by+1,bx,'',ST.lab);
-    for(let s=1;s<=SLOTS;s++)put(ws,by+1,bx+s,`${pad(s)}열`,ST.lab);
+  put(ws,1,0,`기준일 ${today()} · ${RACKS.length}개 랙 + 잔량 RACK · 보관 ${DB.length}건 · 단은 위에서부터 A, 지관은 왼쪽부터 번호`,ST.sub);
+  const lg=[['개발샘플',tubeStyle({type:'dev'})],['양산샘플',tubeStyle({type:'prod'})],['반출중',tubeStyle({type:'prod',out:true})],['폐패턴 검토',tubeStyle({type:'prod',obs:true})],['잔량재고',RSS],['빈 위치',tubeStyle(null)]];
+  lg.forEach(([t,st],i)=>{put(ws,2,1+i*3,t==='빈 위치'?'':t.slice(0,2),st);put(ws,2,2+i*3,t==='폐패턴 검토'?`폐패턴 검토 (${SET.obsMonths}개월 무입고)`:t,ST.sub)});
+  let row=TOP;
+  [...RACKS,RS].forEach(r=>{const isRS=r===RS,lvls=levelsOf(r),def=rackDef(r)||{};let cnt=0,d=0,tm=0;
+    const titleRow=row;row++;
+    put(ws,row,0,'',ST.lab);for(let k=1;k<=Math.max(...lvls,1);k++)put(ws,row,k,pad(k),ST.lab);row++;
+    lvls.forEach((n,i)=>{put(ws,row,0,`${lvName(i+1)}단${def.notes&&def.notes[i]?' '+def.notes[i]:''}`,ST.lab);
+      for(let k=1;k<=n;k++){const L=`${r}-${lvName(i+1)}-${pad(k)}`;
+        if(isRS){const y=ridx.get(L);if(y){cnt++;tm+=y.reserve.m}put(ws,row,k,y?`${y.code} ${y.reserve.m}m`:'',y?RSS:ZS);continue}
+        const p=idx.get(L);if(p){cnt++;if(p.type==='dev')d++}
+        put(ws,row,k,p?p.code:'',tubeStyle(p&&{...p,obs:isObs(p)}))}
+      row++});
+    put(ws,titleRow,0,isRS?`${rackName(r)}   잔량 ${cnt}/${capOf(r)} · ${fmt(tm)} m`:`${rackName(r)}   보관 ${cnt}/${capOf(r)} · 개발 ${d} · 양산 ${cnt-d}`,ST.rackT);
+    for(let c=1;c<=maxN;c++)put(ws,titleRow,c,'',ST.rackT);
+    merges.push({s:{r:titleRow,c:0},e:{r:titleRow,c:maxN}});
+    row++;
   });
-  const maxR=TOP+Math.ceil(RACK_N/PER)*BH,maxC=PER*BW;
-  ws['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:maxR,c:maxC}});
+  ws['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:row,c:maxN}});
   ws['!merges']=merges;
-  ws['!cols']=Array.from({length:maxC+1},(_,c)=>{const k=c%BW;return{wch:k===0?6:k===BW-1?2:8.5}});
-  ws['!rows']=Array.from({length:maxR+1},(_,r)=>({hpt:r<TOP?18:20}));
+  ws['!cols']=[{wch:14},...Array.from({length:maxN},()=>({wch:8.5}))];
+  ws['!rows']=Array.from({length:row+1},(_,r)=>({hpt:r<TOP?18:20}));
   XLSX.utils.book_append_sheet(wb,ws,'위치도');
-  // 잔량 RACK 시트
-  {const [LV,SL]=rsDims(),w={};let n=0,tm=0;
-   put(w,0,0,`${RS} (잔량재고)`,ST.title);
-   for(let a=LV;a>=1;a--){const row=3+(LV-a);put(w,row,0,`${pad(a)}단`,ST.lab);
-     for(let b=1;b<=SL;b++){const y=ridx.get(`${RS}-${pad(a)}-${pad(b)}`);if(y){n++;tm+=y.reserve.m}
-       put(w,row,b,y?`${y.code}\n${y.reserve.m}m`:'',y?{...RSS,alignment:{horizontal:'center',vertical:'center',wrapText:true}}:ZS)}}
-   put(w,1,0,`기준일 ${today()} · ${LV}단 × ${SL}열 · 잔량 ${n}/${LV*SL} · 총 ${fmt(tm)} m`,ST.sub);
-   put(w,2,0,'',ST.lab);for(let b=1;b<=SL;b++)put(w,2,b,`${pad(b)}열`,ST.lab);
-   w['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:3+LV,c:SL}});
-   w['!cols']=[{wch:6},...Array.from({length:SL},()=>({wch:9}))];
-   w['!rows']=Array.from({length:4+LV},(_,r)=>({hpt:r<3?18:30}));
-   XLSX.utils.book_append_sheet(wb,w,'잔량 RACK')}
 
-  const sum=[['랙','배정 업체','용량','보관','개발','양산','반출중','폐패턴 검토','업체 불일치','빈 위치','점유율']];
-  RACKS.forEach(r=>{const ps=DB.filter(p=>p.loc.r===r),cap=LEVELS*SLOTS,dv=ps.filter(p=>p.type==='dev').length;
+  const sum=[['랙','배정 업체','용량(지관)','보관','개발','양산','반출중','폐패턴 검토','업체 불일치','빈 위치','점유율']];
+  RACKS.forEach(r=>{const ps=DB.filter(p=>p.loc.r===r),cap=capOf(r),dv=ps.filter(p=>p.type==='dev').length;
     sum.push([rackName(r),rackSup(r)===SHARED?'공용':supLabel(rackSup(r)),cap,ps.length,dv,ps.length-dv,ps.filter(p=>p.out).length,ps.filter(isObs).length,ps.filter(misRack).length,cap-ps.length,ps.length/cap])});
-  {const [LV,SL]=rsDims(),rs=DB.filter(hasRsv);sum.push([rackName(RS),'잔량재고 전용',LV*SL,rs.length,'','','','','',LV*SL-rs.length,rs.length/(LV*SL)])}
+  {const c=capOf(RS),rs=DB.filter(hasRsv);sum.push([rackName(RS),'잔량재고 전용',c,rs.length,'','','','','',c-rs.length,rs.length/c])}
   const ws2=table(sum,[14,16,7,7,7,7,8,11,11,8,9]);
   for(let r=1;r<sum.length;r++){const a=XLSX.utils.encode_cell({r,c:10});ws2[a].z='0.0%'}
   XLSX.utils.book_append_sheet(wb,ws2,'랙별 현황');
@@ -1282,13 +1292,35 @@ async function saveFile(name,data,mime){
 /* ---------- 렌더 · 이벤트 ---------- */
 function renderAssign(){
   const opts=[...SUP,SHARED];
-  $('rackAssign').innerHTML=RACKS.map(r=>`<label>${r}<select data-r="${r}">${opts.map(v=>`<option value="${esc(v)}"${rackSup(r)===v?' selected':''}>${v===SHARED?'공용':esc(supLabel(v))}</option>`).join('')}</select></label>`).join('');
-  const cnt={};RACKS.forEach(r=>cnt[rackSup(r)]=(cnt[rackSup(r)]||0)+1);
-  $('rackAssignSum').textContent=Object.entries(cnt).map(([k,v])=>`${k===SHARED?'공용':k} ${v}`).join(' · ')+` · 잔량재고 ${RS} 1`;
+  $('rackAssign').innerHTML=SET.racks.map((d,i)=>`<div class="rk-row" data-i="${i}"><b class="mono">${d.id}</b>
+    <input data-k="tag" value="${esc(d.tag||'')}" placeholder="표지" aria-label="${d.id} 표지">
+    <select data-k="sup" aria-label="${d.id} 배정 업체">${opts.map(v=>`<option value="${esc(v)}"${(d.sup||SHARED)===v?' selected':''}>${v===SHARED?'공용':esc(supLabel(v))}</option>`).join('')}</select>
+    <input class="lv mono" data-k="levels" value="${d.levels.join(', ')}" aria-label="${d.id} 단별 지관 수">
+    <span class="sum">${d.levels.length}단 ${capOf(d.id)}</span>
+    <button class="btn sm" data-k="del" title="빈 랙만 삭제할 수 있습니다">삭제</button></div>`).join('');
+  const tot=RACKS.reduce((a,r)=>a+capOf(r),0),cnt={};RACKS.forEach(r=>cnt[rackSup(r)]=(cnt[rackSup(r)]||0)+capOf(r));
+  $('rackAssignSum').textContent=`${RACKS.length}개 랙 · 지관 ${tot.toLocaleString()}자리 (${Object.entries(cnt).map(([k,v])=>`${k===SHARED?'공용':k} ${v}`).join(' · ')}) + ${RS} ${capOf(RS)}자리`;
 }
 function saveSet(){try{localStorage.setItem(SKEY,JSON.stringify(SET))}catch(e){}}
-$('rackAssign').onchange=e=>{const sel=e.target.closest('select');if(!sel)return;SET.rackSup[sel.dataset.r]=sel.value;saveSet();toast(`${sel.dataset.r} → ${sel.value==='공용'?'공용 랙':supLabel(sel.value)+' 랙'}`);render()};
-$('rackAssignReset').onclick=()=>{SET.rackSup=defaultRackSup();saveSet();toast('기본 랙 배정으로 되돌렸습니다');render()};
+const usedIn=(r,fn)=>DB.filter(p=>p.loc.r===r&&fn(p.loc)).length;
+$('rackAssign').onchange=e=>{const el=e.target.closest('[data-k]'),row=e.target.closest('.rk-row');if(!el||!row)return;const d=SET.racks[+row.dataset.i],k=el.dataset.k;
+  if(k==='tag')d.tag=el.value.trim();
+  else if(k==='sup')d.sup=el.value;
+  else if(k==='levels'){const lv=el.value.split(/[,\s]+/).map(x=>parseInt(x,10)).filter(x=>x>0&&x<=200);
+    if(!lv.length){toast('단별 지관 수를 숫자로 입력하세요. 예: 45, 45, 44, 45');renderAssign();return}
+    const lost=usedIn(d.id,l=>l.lv>lv.length||l.s>lv[l.lv-1]);
+    if(lost){toast(`${d.id}에서 ${lost}건이 줄어든 범위 밖에 있습니다. 먼저 위치를 옮겨 주세요.`);renderAssign();return}
+    d.levels=lv}
+  saveSet();toast(`${d.id} 랙 설정을 저장했습니다`);render()};
+$('rackAssign').onclick=e=>{const b=e.target.closest('button[data-k="del"]');if(!b)return;const i=+b.closest('.rk-row').dataset.i,d=SET.racks[i];
+  if(DB.some(p=>p.loc.r===d.id)){toast(`${d.id}에 보관 중인 패턴이 있어 삭제할 수 없습니다.`);return}
+  SET.racks.splice(i,1);syncRacks();if(S.rack===d.id)S.rack=RACKS[0]||RS;saveSet();toast(`${d.id} 랙을 삭제했습니다`);render()};
+$('rackAdd').onclick=()=>{let n=SET.racks.length+1,id;do{id='R'+pad(n++)}while(SET.racks.some(x=>x.id===id));
+  SET.racks.push({id,tag:'',sup:SHARED,levels:[20,20,20,20]});syncRacks();saveSet();toast(`${id} 랙을 추가했습니다. 단별 지관 수를 맞춰 주세요.`);render()};
+$('rackAssignReset').onclick=()=>{const keep=new Set(DB.map(p=>p.loc.r));const def=cloneRacks();
+  const lost=DB.filter(p=>{const d=def.find(x=>x.id===p.loc.r);return !d||p.loc.lv>d.levels.length||p.loc.s>d.levels[p.loc.lv-1]}).length;
+  if(lost){toast(`사진 기준 구성 밖에 있는 패턴 ${lost}건이 있어 되돌릴 수 없습니다.`);return}
+  SET.racks=def;syncRacks();saveSet();toast('사진 기준 랙 구성으로 되돌렸습니다');render()};
 function renderDataNote(){const n=DB.length;$('dataNote').textContent=n?`패턴 ${n.toLocaleString()}건 저장됨`:'아직 등록된 패턴이 없습니다'}
 function renderDSum(){
   if(!dateOn()){$('dSum').innerHTML='기간을 고르면 그 기간에 입고된 패턴만 위치도·목록·입고 내역에 표시됩니다.';return}
